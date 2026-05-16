@@ -26,7 +26,9 @@ export default function AdminDashboard() {
       try {
         const [ordersData, menuData] = await Promise.all([
           fetchWithAuth('/orders/admin'),
-          fetch('https://unearthly-superblessed-shela.ngrok-free.dev/api/menu').then(res => res.json())
+          fetch('https://unearthly-superblessed-shela.ngrok-free.dev/api/menu', {headers:{ 'ngrok-skip-browser-warning': 'true',
+    'Content-Type': 'application/json'
+}}).then(res => res.json())
         ]);
         setOrders(ordersData);
         setMenuItems(menuData);
