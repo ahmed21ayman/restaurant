@@ -1,5 +1,5 @@
-# Simple workflow for deploying static content to GitHub Pages
-name: Deploy static content to Pages
+ deploying a Vite React app to GitHub Pages
+name: Deploy Vite app to Pages
 
 on:
   # Runs on pushes targeting the default branch
@@ -16,13 +16,11 @@ permissions:
   id-token: write
 
 # Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
-# However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
 concurrency:
   group: "pages"
   cancel-in-progress: false
 
 jobs:
-  # Single deploy job since we're just deploying
   deploy:
     environment:
       name: github-pages
@@ -31,13 +29,32 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      # --- ADDED: Set up Node.js so we can run npm commands ---
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      # --- ADDED: Install your project dependencies ---
+      - name: Install dependencies
+        run: npm install
+        working-directory: ./food-order
+
+      # --- ADDED: Build the Vite project into static HTML/JS/CSS ---
+      - name: Build project
+        run: npm run build
+        working-directory: ./food-order
+
       - name: Setup Pages
         uses: actions/configure-pages@v5
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          # Upload entire repository
-          path: './food-order'
+          # --- CHANGED: Tell GitHub to upload the 'dist' folder Vite creates ---
+          path: './food-order/dist'
+
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v5
