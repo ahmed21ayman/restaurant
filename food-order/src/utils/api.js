@@ -1,4 +1,4 @@
-const API_URL = "yahyatarek.ddns.net:4000/api";
+const API_URL = "https://unearthly-superblessed-shela.ngrok-free.dev/api";
 
 export const fetchWithAuth = async (endpoint, options = {}) => {
   const token = localStorage.getItem("token");
