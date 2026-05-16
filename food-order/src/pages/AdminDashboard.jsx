@@ -26,7 +26,7 @@ export default function AdminDashboard() {
       try {
         const [ordersData, menuData] = await Promise.all([
           fetchWithAuth('/orders/admin'),
-          fetch('http://localhost:5001/api/menu').then(res => res.json())
+          fetch('yahyatarek.ddns.net:4000/api/menu').then(res => res.json())
         ]);
         setOrders(ordersData);
         setMenuItems(menuData);

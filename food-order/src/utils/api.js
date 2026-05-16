@@ -1,15 +1,15 @@
-const API_URL = 'http://localhost:5001/api';
+const API_URL = "yahyatarek.ddns.net:4000/api";
 
 export const fetchWithAuth = async (endpoint, options = {}) => {
-  const token = localStorage.getItem('token');
-  
+  const token = localStorage.getItem("token");
+
   const headers = {
-    'Content-Type': 'application/json',
+    "Content-Type": "application/json",
     ...options.headers,
   };
 
   if (token) {
-    headers['Authorization'] = `Bearer ${token}`;
+    headers["Authorization"] = `Bearer ${token}`;
   }
 
   const response = await fetch(`${API_URL}${endpoint}`, {
@@ -22,13 +22,15 @@ export const fetchWithAuth = async (endpoint, options = {}) => {
     data = JSON.parse(text);
   } catch (err) {
     if (!response.ok) {
-      throw new Error(`Server Error (${response.status}): Endpoint might not exist or server needs a restart.`);
+      throw new Error(
+        `Server Error (${response.status}): Endpoint might not exist or server needs a restart.`,
+      );
     }
-    throw new Error('Invalid response from server');
+    throw new Error("Invalid response from server");
   }
 
   if (!response.ok) {
-    throw new Error(data.msg || 'Something went wrong');
+    throw new Error(data.msg || "Something went wrong");
   }
 
   return data;
